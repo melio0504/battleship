@@ -1,2 +1,6 @@
-# battleship
-A web-based implementation of the classic Battleship game where players strategically guess and sink their opponent’s hidden fleet.
+# Battleship
+
+> [!NOTE]
+> This project is currently in the planning and development phase.
+
+![TemporaryPicture](/assets/WIP.jpg)

@@ -1,0 +1,20 @@
+{
+  "name": "battleship",
+  "version": "1.0.0",
+  "description": "A web-based implementation of the classic Battleship game where players strategically guess and sink their opponent’s hidden fleet.",
+  "homepage": "https://github.com/melio0504/battleship#readme",
+  "bugs": {
+    "url": "https://github.com/melio0504/battleship/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/melio0504/battleship.git"
+  },
+  "license": "MIT",
+  "author": "Romelio Teodoro (www.romelioteodoro.dev)",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  }
+}

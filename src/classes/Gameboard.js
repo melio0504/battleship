@@ -107,4 +107,58 @@ export class Gameboard {
     return ship;
   }
 
+  moveShip(originCoordinate, targetCoordinate, orientationOverride = null) {
+    const shipData = this.getShipDataAt(originCoordinate);
+    if (!shipData) {
+      return {
+        moved: false,
+        reason: "No ship at selected origin coordinate",
+      };
+    }
+
+    const { ship, coordinates: oldCoordinates } = shipData;
+    const currentOrientation = this.getCoordinatesOrientation(oldCoordinates);
+    const orientation = orientationOverride ?? currentOrientation;
+
+    if (!["horizontal", "vertical"].includes(orientation)) {
+      return {
+        moved: false,
+        reason: "Ship orientation must be horizontal or vertical",
+      };
+    }
+
+    oldCoordinates.forEach((coordinate) => {
+      this.occupiedCoordinates.delete(Gameboard.coordinateKey(coordinate));
+    });
+
+    const newCoordinates = this.getCoordinatesForPlacement(
+      targetCoordinate,
+      ship.length,
+      orientation,
+    );
+
+    if (!this.canPlaceCoordinates(newCoordinates)) {
+      oldCoordinates.forEach((coordinate) => {
+        this.occupiedCoordinates.set(Gameboard.coordinateKey(coordinate), shipData);
+      });
+
+      return {
+        moved: false,
+        reason: "Ship cannot be moved to that coordinate",
+      };
+    }
+
+    shipData.coordinates = newCoordinates;
+    newCoordinates.forEach((coordinate) => {
+      this.occupiedCoordinates.set(Gameboard.coordinateKey(coordinate), shipData);
+    });
+
+    return {
+      moved: true,
+      ship,
+      coordinates: newCoordinates,
+      orientation,
+    };
+  }
+
 }

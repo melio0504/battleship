@@ -34,3 +34,5 @@ const playSound = (audio) => {
   });
 };
 
+export function createGameController(domManager) {
+}

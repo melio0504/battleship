@@ -25,4 +25,20 @@ export class Player {
     return legalAttacks[randomIndex];
   }
 
+  takeTurn(enemyBoard, coordinate = null) {
+    if (this.isComputer) {
+      const randomCoordinate = this.getRandomLegalAttack(enemyBoard);
+      const result = this.makeAttack(enemyBoard, randomCoordinate);
+      return {
+        ...result,
+        coordinate: randomCoordinate,
+      };
+    }
+
+    if (!coordinate) {
+      throw new Error("Human player must provide attack coordinates");
+    }
+
+    return this.makeAttack(enemyBoard, coordinate);
+  }
 }

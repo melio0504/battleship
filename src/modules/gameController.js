@@ -53,4 +53,23 @@ export function createGameController(domManager) {
     render();
   };
 
+  const render = () => {
+    domManager.render({
+      player: state.player,
+      computer: state.computer,
+      currentTurn: state.currentTurn,
+      gameOver: state.gameOver,
+      setupPhase: state.setupPhase,
+      statusMessage: state.statusMessage,
+      battleLogMessage: state.battleLogMessage,
+      selectedShipOrigin: state.selectedShipOrigin,
+      selectedShipCoordinates: state.selectedShipCoordinates,
+      onAttack: handlePlayerAttack,
+      onNewGame: startNewGame,
+      onRandomizePlayerFleet: randomizePlayerFleet,
+      onPlayerBoardCellClick: handlePlayerBoardCellClick,
+      onTiltSelectedShip: tiltSelectedShip,
+    });
+  };
+
 }

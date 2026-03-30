@@ -35,4 +35,17 @@ const playSound = (audio) => {
 };
 
 export function createGameController(domManager) {
+  const state = {
+    player: null,
+    computer: null,
+    currentTurn: "player",
+    gameOver: false,
+    setupPhase: true,
+    statusMessage: "",
+    battleLogMessage: "",
+    selectedShipOrigin: null,
+    selectedShipCoordinates: [],
+    selectedShipOrientation: null,
+  };
+
 }

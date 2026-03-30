@@ -11,4 +11,8 @@ export class Player {
     this.gameboard.placeFleetRandomly(shipLengths);
   }
 
+  makeAttack(enemyBoard, coordinate) {
+    return enemyBoard.receiveAttack(coordinate);
+  }
+
 }

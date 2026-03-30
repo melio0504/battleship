@@ -54,4 +54,21 @@ export class Gameboard {
     return firstX === secondX ? "vertical" : "horizontal";
   }
 
+  getCoordinatesForPlacement(startCoordinate, length, orientation = "horizontal") {
+    const [startX, startY] = startCoordinate;
+
+    if (!["horizontal", "vertical"].includes(orientation)) {
+      throw new Error("Ship orientation must be horizontal or vertical");
+    }
+
+    const coordinates = [];
+    for (let i = 0; i < length; i += 1) {
+      const x = orientation === "horizontal" ? startX + i : startX;
+      const y = orientation === "vertical" ? startY + i : startY;
+      coordinates.push([x, y]);
+    }
+
+    return coordinates;
+  }
+
 }

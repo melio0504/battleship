@@ -271,4 +271,11 @@ export function createGameController(domManager) {
     render();
   }
 
+  return {
+    startNewGame,
+    handlePlayerAttack,
+    randomizePlayerFleet,
+    handlePlayerBoardCellClick,
+    tiltSelectedShip,
+  };
 }

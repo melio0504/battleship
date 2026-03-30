@@ -234,4 +234,8 @@ export class Gameboard {
     };
   }
 
+  allShipsSunk() {
+    return this.ships.length > 0 && this.ships.every(({ ship }) => ship.isSunk());
+  }
+
 }

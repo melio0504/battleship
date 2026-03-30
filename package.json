@@ -21,8 +21,10 @@
     "deploy": "git subtree push --prefix dist origin gh-pages"
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.29.2",
+    "@babel/core": "^7.29.0",
+    "@babel/preset-env": "^7.29.0",
     "@eslint/js": "^10.0.1",
+    "babel-jest": "^30.3.0",
     "css-loader": "^7.1.4",
     "eslint": "^10.1.0",
     "globals": "^17.4.0",

@@ -15,4 +15,14 @@ export class Player {
     return enemyBoard.receiveAttack(coordinate);
   }
 
+  getRandomLegalAttack(enemyBoard) {
+    const legalAttacks = enemyBoard.getLegalAttacks();
+    if (legalAttacks.length === 0) {
+      throw new Error("No legal attacks remaining");
+    }
+
+    const randomIndex = Math.floor(Math.random() * legalAttacks.length);
+    return legalAttacks[randomIndex];
+  }
+
 }

@@ -92,4 +92,32 @@ export function createGameController(domManager) {
     return false;
   };
 
+  const executeComputerTurn = () => {
+    if (state.gameOver) {
+      return;
+    }
+
+    const result = state.computer.takeTurn(state.player.gameboard);
+    const [x, y] = result.coordinate;
+
+    if (result.valid) {
+      playSound(soundEffects.attack);
+    }
+
+    if (result.hit) {
+      writeBattleLog(`Computer hit your ship at (${x}, ${y}).`);
+      state.statusMessage = `Computer scored a hit at (${x}, ${y}).`;
+    } else {
+      writeBattleLog(`Computer missed at (${x}, ${y}).`);
+      state.statusMessage = `Computer missed at (${x}, ${y}). Your turn.`;
+    }
+
+    if (!checkForWinner()) {
+      state.currentTurn = "player";
+    }
+
+    render();
+  };
+
+  function handlePlayerAttack(coordinate) {
 }

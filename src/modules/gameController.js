@@ -208,4 +208,46 @@ export function createGameController(domManager) {
   }
 
   function handlePlayerBoardCellClick(coordinate) {
+    if (state.gameOver || !state.setupPhase) {
+      return;
+    }
+
+    const board = state.player.gameboard;
+    if (!state.selectedShipOrigin) {
+      if (!board.hasShipAt(coordinate)) {
+        writeBattleLog("Select a ship cell first, then choose a destination.");
+        return;
+      }
+
+      const shipData = board.getShipDataAt(coordinate);
+      const orientation = board.getCoordinatesOrientation(shipData.coordinates);
+
+      state.selectedShipOrigin = coordinate;
+      state.selectedShipCoordinates = [...shipData.coordinates];
+      state.selectedShipOrientation = orientation;
+      state.statusMessage =
+        "Ship selected. Click destination or use Tilt Selected Ship.";
+      writeBattleLog("Ship selected. Choose destination or tilt.");
+      render();
+      return;
+    }
+
+    const moveResult = board.moveShip(
+      state.selectedShipOrigin,
+      coordinate,
+      state.selectedShipOrientation,
+    );
+    if (!moveResult.moved) {
+      writeBattleLog("Invalid move. Keep ship in bounds and avoid overlap.");
+    } else {
+      writeBattleLog("Ship moved.");
+      state.statusMessage = "Ship moved. Continue repositioning or attack to start.";
+    }
+
+    state.selectedShipOrigin = null;
+    state.selectedShipCoordinates = [];
+    state.selectedShipOrientation = null;
+    render();
+  }
+
 }

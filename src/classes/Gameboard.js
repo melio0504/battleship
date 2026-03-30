@@ -48,4 +48,10 @@ export class Gameboard {
     });
   }
 
+  getCoordinatesOrientation(coordinates) {
+    const [firstX] = coordinates[0];
+    const [secondX] = coordinates[1] ?? coordinates[0];
+    return firstX === secondX ? "vertical" : "horizontal";
+  }
+
 }

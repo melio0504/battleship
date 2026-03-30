@@ -81,4 +81,30 @@ export class Gameboard {
     });
   }
 
+  placeShip(length, startCoordinate, orientation = "horizontal") {
+    const ship = new Ship(length);
+    const coordinates = this.getCoordinatesForPlacement(
+      startCoordinate,
+      ship.length,
+      orientation,
+    );
+
+    if (!this.canPlaceCoordinates(coordinates)) {
+      throw new Error("Invalid ship placement");
+    }
+
+    const shipData = {
+      ship,
+      coordinates,
+    };
+
+    this.ships.push(shipData);
+    coordinates.forEach((coordinate) => {
+      const key = Gameboard.coordinateKey(coordinate);
+      this.occupiedCoordinates.set(key, shipData);
+    });
+
+    return ship;
+  }
+
 }

@@ -48,4 +48,9 @@ export function createGameController(domManager) {
     selectedShipOrientation: null,
   };
 
+  const writeBattleLog = (message) => {
+    state.battleLogMessage = message;
+    render();
+  };
+
 }

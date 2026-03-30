@@ -195,4 +195,43 @@ export class Gameboard {
   }
 
   receiveAttack(coordinate) {
+    if (!this.isWithinBounds(coordinate)) {
+      throw new Error("Attack coordinate is out of bounds");
+    }
+
+    const key = Gameboard.coordinateKey(coordinate);
+    if (this.attackedCoordinates.has(key)) {
+      return {
+        valid: false,
+        coordinate,
+        repeated: true,
+        hit: false,
+      };
+    }
+
+    this.attackedCoordinates.add(key);
+    const shipData = this.occupiedCoordinates.get(key);
+    if (shipData) {
+      shipData.ship.hit();
+      this.successfulAttacks.push(coordinate);
+
+      return {
+        valid: true,
+        coordinate,
+        repeated: false,
+        hit: true,
+        sunk: shipData.ship.isSunk(),
+        ship: shipData.ship,
+      };
+    }
+
+    this.missedAttacks.push(coordinate);
+    return {
+      valid: true,
+      coordinate,
+      repeated: false,
+      hit: false,
+    };
+  }
+
 }

@@ -120,4 +120,50 @@ export function createGameController(domManager) {
   };
 
   function handlePlayerAttack(coordinate) {
+    if (state.gameOver || state.currentTurn !== "player") {
+      return;
+    }
+
+    if (state.setupPhase) {
+      state.setupPhase = false;
+      state.selectedShipOrigin = null;
+      state.selectedShipCoordinates = [];
+      state.selectedShipOrientation = null;
+      writeBattleLog("Ship placement locked. Battle started.");
+    }
+
+    const result = state.player.takeTurn(state.computer.gameboard, coordinate);
+    const [x, y] = coordinate;
+
+    if (!result.valid && result.repeated) {
+      state.statusMessage = `(${x}, ${y}) was already attacked. Pick another coordinate.`;
+      writeBattleLog(`(${x}, ${y}) was already attacked.`);
+      render();
+      return;
+    }
+
+    if (result.valid) {
+      playSound(soundEffects.attack);
+    }
+
+    if (result.hit) {
+      writeBattleLog(`You hit an enemy ship at (${x}, ${y}).`);
+      state.statusMessage = `Direct hit at (${x}, ${y}).`;
+    } else {
+      writeBattleLog(`You missed at (${x}, ${y}).`);
+      state.statusMessage = `Missed at (${x}, ${y}). Computer is thinking...`;
+    }
+
+    if (checkForWinner()) {
+      render();
+      return;
+    }
+
+    state.currentTurn = "computer";
+    render();
+
+    window.setTimeout(executeComputerTurn, 500);
+  }
+
+  function randomizePlayerFleet() {
 }

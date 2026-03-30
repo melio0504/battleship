@@ -33,4 +33,19 @@ export class Gameboard {
     return this.occupiedCoordinates.get(key) ?? null;
   }
 
+  getShipPlacements() {
+    return this.ships.map(({ ship, coordinates }) => {
+      const [firstX, firstY] = coordinates[0];
+      const orientation = this.getCoordinatesOrientation(coordinates);
+
+      return {
+        ship,
+        length: ship.length,
+        start: [firstX, firstY],
+        orientation,
+        coordinates: [...coordinates],
+      };
+    });
+  }
+
 }

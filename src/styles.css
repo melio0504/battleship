@@ -232,3 +232,22 @@ body {
   }
 }
 
+@media (max-width: 700px) {
+  #app {
+    width: 97vw;
+    margin: 1rem auto;
+  }
+
+  .app-shell {
+    padding: 1rem;
+  }
+
+  .top-area {
+    grid-template-columns: 1fr;
+  }
+
+  .top-right-panel {
+    grid-template-columns: 1fr;
+  }
+}
+

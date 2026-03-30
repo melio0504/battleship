@@ -27,3 +27,8 @@ body {
   background: var(--bg);
 }
 
+#app {
+  width: min(1160px, 95vw);
+  margin: 2rem auto;
+}
+

@@ -95,3 +95,180 @@ function createBoardElement({
   return wrapper;
 }
 
+export function createDomManager(rootNode) {
+  function render({
+    player,
+    computer,
+    currentTurn,
+    gameOver,
+    setupPhase,
+    statusMessage,
+    battleLogMessage,
+    selectedShipOrigin,
+    selectedShipCoordinates,
+    onAttack,
+    onNewGame,
+    onRandomizePlayerFleet,
+    onPlayerBoardCellClick,
+    onTiltSelectedShip,
+  }) {
+    rootNode.innerHTML = "";
+
+    const app = document.createElement("main");
+    app.className = "app-shell";
+
+    const topArea = document.createElement("section");
+    topArea.className = "top-area";
+
+    const header = document.createElement("header");
+    header.className = "header";
+
+    const title = document.createElement("h1");
+    title.textContent = "Battleship Command";
+
+    const subtitle = document.createElement("p");
+    subtitle.className = "subtitle";
+    subtitle.textContent =
+      "Target the enemy fleet. Click the right board to launch each strike.";
+
+    const controls = document.createElement("div");
+    controls.className = "controls";
+
+    const newGameButton = document.createElement("button");
+    newGameButton.type = "button";
+    newGameButton.className = "action-btn";
+    newGameButton.textContent = "New Game";
+    newGameButton.addEventListener("click", onNewGame);
+
+    const randomizeButton = document.createElement("button");
+    randomizeButton.type = "button";
+    randomizeButton.className = "action-btn action-btn--secondary";
+    randomizeButton.textContent = "Randomize My Fleet";
+    randomizeButton.addEventListener("click", onRandomizePlayerFleet);
+
+    const tiltButton = document.createElement("button");
+    tiltButton.type = "button";
+    tiltButton.className = "action-btn action-btn--secondary";
+    tiltButton.textContent = "Tilt Selected Ship";
+    tiltButton.addEventListener("click", onTiltSelectedShip);
+
+    controls.appendChild(newGameButton);
+    controls.appendChild(randomizeButton);
+    controls.appendChild(tiltButton);
+
+    const turnLabelText = gameOver
+      ? "Game Over"
+      : setupPhase
+        ? "Setup: Move ships on your board"
+        : currentTurn === "player"
+        ? "Your turn"
+        : "Computer turn";
+
+      const battleLog = document.createElement("section");
+      battleLog.className = "battle-log battle-log--header";
+
+      const battleLogTitle = document.createElement("p");
+      battleLogTitle.className = "battle-log__title";
+      battleLogTitle.textContent = "Battle Log";
+
+      const battleLogMeta = document.createElement("p");
+      battleLogMeta.className = "battle-log__meta";
+      battleLogMeta.textContent = turnLabelText;
+
+      const battleLogStatus = document.createElement("p");
+      battleLogStatus.className = "battle-log__status";
+      battleLogStatus.textContent = statusMessage;
+
+      battleLog.appendChild(battleLogTitle);
+      battleLog.appendChild(battleLogMeta);
+      battleLog.appendChild(battleLogStatus);
+
+    header.appendChild(title);
+    header.appendChild(subtitle);
+    header.appendChild(controls);
+      header.appendChild(battleLog);
+
+    const topRightPanel = document.createElement("aside");
+    topRightPanel.className = "top-right-panel";
+
+    const heroImage = document.createElement("img");
+    heroImage.className = "hero-image";
+    heroImage.src = pirateCatImage;
+    heroImage.alt = "Pirate cat captain portrait";
+
+    topRightPanel.appendChild(heroImage);
+
+    topArea.appendChild(header);
+    topArea.appendChild(topRightPanel);
+
+    const boardLayout = document.createElement("section");
+    boardLayout.className = "boards";
+
+    boardLayout.appendChild(
+      createBoardElement({
+        title: "Your Fleet",
+        board: player.gameboard,
+        revealShips: true,
+        isTargetBoard: false,
+        currentTurn,
+        gameOver,
+        onAttack,
+        setupPhase,
+        onPlayerBoardCellClick,
+        selectedShipOrigin,
+        selectedShipCoordinates,
+      }),
+    );
+
+    boardLayout.appendChild(
+      createBoardElement({
+        title: "Enemy Waters",
+        board: computer.gameboard,
+        revealShips: false,
+        isTargetBoard: true,
+        currentTurn,
+        gameOver,
+        onAttack,
+        setupPhase,
+        onPlayerBoardCellClick,
+        selectedShipOrigin,
+        selectedShipCoordinates,
+      }),
+    );
+
+    app.appendChild(topArea);
+    app.appendChild(boardLayout);
+
+    if (gameOver) {
+      const gameOverModal = document.createElement("div");
+      gameOverModal.className = "game-over-modal";
+
+      const gameOverContent = document.createElement("div");
+      gameOverContent.className = "game-over-modal__content";
+
+      const gameOverTitle = document.createElement("h2");
+      gameOverTitle.textContent = "Game Over";
+
+      const gameOverText = document.createElement("p");
+      gameOverText.textContent = statusMessage;
+
+      const gameOverButton = document.createElement("button");
+      gameOverButton.type = "button";
+      gameOverButton.className = "action-btn";
+      gameOverButton.textContent = "Start New Game";
+      gameOverButton.addEventListener("click", onNewGame);
+
+      gameOverContent.appendChild(gameOverTitle);
+      gameOverContent.appendChild(gameOverText);
+      gameOverContent.appendChild(gameOverButton);
+      gameOverModal.appendChild(gameOverContent);
+      app.appendChild(gameOverModal);
+    }
+
+    rootNode.appendChild(app);
+  }
+
+  return {
+    render,
+  };
+}

@@ -180,4 +180,32 @@ export function createGameController(domManager) {
     render();
   }
 
+  function tiltSelectedShip() {
+    if (state.gameOver || !state.setupPhase || !state.selectedShipOrigin) {
+      writeBattleLog("Select a ship first, then tilt it.");
+      return;
+    }
+
+    const board = state.player.gameboard;
+    const targetOrientation =
+      state.selectedShipOrientation === "horizontal" ? "vertical" : "horizontal";
+    const tiltResult = board.moveShip(
+      state.selectedShipOrigin,
+      state.selectedShipOrigin,
+      targetOrientation,
+    );
+
+    if (!tiltResult.moved) {
+      writeBattleLog("Cannot tilt here. Not enough space for rotation.");
+      return;
+    }
+
+    state.selectedShipCoordinates = tiltResult.coordinates;
+    state.selectedShipOrientation = tiltResult.orientation;
+    state.selectedShipOrigin = tiltResult.coordinates[0];
+    state.statusMessage = "Ship tilted. You can move it or tilt again.";
+    writeBattleLog("Selected ship tilted.");
+  }
+
+  function handlePlayerBoardCellClick(coordinate) {
 }

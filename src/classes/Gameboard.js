@@ -18,4 +18,9 @@ export class Gameboard {
     return x >= 0 && x < this.size && y >= 0 && y < this.size;
   }
 
+  isAttackLegal(coordinate) {
+    const key = Gameboard.coordinateKey(coordinate);
+    return !this.attackedCoordinates.has(key);
+  }
+
 }

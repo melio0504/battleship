@@ -161,32 +161,32 @@ export function createDomManager(rootNode) {
       : setupPhase
         ? "Setup: Move ships on your board"
         : currentTurn === "player"
-        ? "Your turn"
-        : "Computer turn";
+          ? "Your turn"
+          : "Computer turn";
 
-      const battleLog = document.createElement("section");
-      battleLog.className = "battle-log battle-log--header";
+    const battleLog = document.createElement("section");
+    battleLog.className = "battle-log battle-log--header";
 
-      const battleLogTitle = document.createElement("p");
-      battleLogTitle.className = "battle-log__title";
-      battleLogTitle.textContent = "Battle Log";
+    const battleLogTitle = document.createElement("p");
+    battleLogTitle.className = "battle-log__title";
+    battleLogTitle.textContent = "Battle Log";
 
-      const battleLogMeta = document.createElement("p");
-      battleLogMeta.className = "battle-log__meta";
-      battleLogMeta.textContent = turnLabelText;
+    const battleLogMeta = document.createElement("p");
+    battleLogMeta.className = "battle-log__meta";
+    battleLogMeta.textContent = turnLabelText;
 
-      const battleLogStatus = document.createElement("p");
-      battleLogStatus.className = "battle-log__status";
-      battleLogStatus.textContent = statusMessage;
+    const battleLogStatus = document.createElement("p");
+    battleLogStatus.className = "battle-log__status";
+    battleLogStatus.textContent = statusMessage;
 
-      battleLog.appendChild(battleLogTitle);
-      battleLog.appendChild(battleLogMeta);
-      battleLog.appendChild(battleLogStatus);
+    battleLog.appendChild(battleLogTitle);
+    battleLog.appendChild(battleLogMeta);
+    battleLog.appendChild(battleLogStatus);
 
     header.appendChild(title);
     header.appendChild(subtitle);
     header.appendChild(controls);
-      header.appendChild(battleLog);
+    header.appendChild(battleLog);
 
     const topRightPanel = document.createElement("aside");
     topRightPanel.className = "top-right-panel";

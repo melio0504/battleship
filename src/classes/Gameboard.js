@@ -23,4 +23,9 @@ export class Gameboard {
     return !this.attackedCoordinates.has(key);
   }
 
+  hasShipAt(coordinate) {
+    const key = Gameboard.coordinateKey(coordinate);
+    return this.occupiedCoordinates.has(key);
+  }
+
 }

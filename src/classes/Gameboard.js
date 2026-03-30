@@ -238,4 +238,19 @@ export class Gameboard {
     return this.ships.length > 0 && this.ships.every(({ ship }) => ship.isSunk());
   }
 
+  getLegalAttacks() {
+    const legalCoordinates = [];
+
+    for (let y = 0; y < this.size; y += 1) {
+      for (let x = 0; x < this.size; x += 1) {
+        const coordinate = [x, y];
+        if (this.isAttackLegal(coordinate)) {
+          legalCoordinates.push(coordinate);
+        }
+      }
+    }
+
+    return legalCoordinates;
+  }
+
 }

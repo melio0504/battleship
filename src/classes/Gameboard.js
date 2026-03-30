@@ -253,4 +253,22 @@ export class Gameboard {
     return legalCoordinates;
   }
 
+  getCellStatus(coordinate, revealShips = false) {
+    const key = Gameboard.coordinateKey(coordinate);
+
+    if (this.successfulAttacks.some(([x, y]) => `${x},${y}` === key)) {
+      return "hit";
+    }
+
+    if (this.missedAttacks.some(([x, y]) => `${x},${y}` === key)) {
+      return "miss";
+    }
+
+    if (revealShips && this.occupiedCoordinates.has(key)) {
+      return "ship";
+    }
+
+    return "empty";
+  }
+
 }

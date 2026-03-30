@@ -161,4 +161,38 @@ export class Gameboard {
     };
   }
 
+  placeFleetFromCoordinates(placements) {
+    placements.forEach(({ length, start, orientation }) => {
+      this.placeShip(length, start, orientation);
+    });
+  }
+
+  placeFleetRandomly(shipLengths) {
+    this.resetBoard();
+
+    shipLengths.forEach((length) => {
+      let placed = false;
+      let attempts = 0;
+
+      while (!placed && attempts < 200) {
+        attempts += 1;
+        const orientation = Math.random() > 0.5 ? "horizontal" : "vertical";
+        const x = Math.floor(Math.random() * this.size);
+        const y = Math.floor(Math.random() * this.size);
+
+        try {
+          this.placeShip(length, [x, y], orientation);
+          placed = true;
+        } catch {
+          // Placement failed due to overlap/out-of-bounds. Try another coordinate.
+        }
+      }
+
+      if (!placed) {
+        throw new Error("Could not place fleet randomly");
+      }
+    });
+  }
+
+  receiveAttack(coordinate) {
 }

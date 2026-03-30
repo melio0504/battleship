@@ -27,3 +27,10 @@ const soundEffects = {
   userLose: new Audio(userLoseSoundFile),
 };
 
+const playSound = (audio) => {
+  audio.currentTime = 0;
+  audio.play().catch(() => {
+    // Ignore autoplay or playback errors so the game flow is never blocked.
+  });
+};
+

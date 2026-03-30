@@ -250,4 +250,25 @@ export function createGameController(domManager) {
     render();
   }
 
+  function startNewGame() {
+    state.player = new Player("Commander", false);
+    state.computer = new Player("CPU Admiral", true);
+    state.currentTurn = "player";
+    state.gameOver = false;
+    state.setupPhase = true;
+    state.battleLogMessage = "Awaiting command.";
+    state.selectedShipOrigin = null;
+    state.selectedShipCoordinates = [];
+    state.selectedShipOrientation = null;
+
+    state.player.gameboard.placeFleetFromCoordinates(DEFAULT_PLAYER_PLACEMENTS);
+    state.computer.gameboard.placeFleetFromCoordinates(DEFAULT_COMPUTER_PLACEMENTS);
+
+    state.statusMessage =
+      "Setup phase: move ships on your board or randomize, then attack enemy grid.";
+    writeBattleLog("New game started.");
+
+    render();
+  }
+
 }

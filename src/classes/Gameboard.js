@@ -10,4 +10,8 @@ export class Gameboard {
     this.occupiedCoordinates = new Map();
   }
 
+  static coordinateKey([x, y]) {
+    return `${x},${y}`;
+  }
+
 }

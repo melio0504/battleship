@@ -14,4 +14,8 @@ export class Gameboard {
     return `${x},${y}`;
   }
 
+  isWithinBounds([x, y]) {
+    return x >= 0 && x < this.size && y >= 0 && y < this.size;
+  }
+
 }

@@ -166,4 +166,18 @@ export function createGameController(domManager) {
   }
 
   function randomizePlayerFleet() {
+    if (state.gameOver || state.currentTurn !== "player" || !state.setupPhase) {
+      writeBattleLog("You can randomize ships only before the first attack.");
+      return;
+    }
+
+    state.player.placeFleetRandomly(DEFAULT_SHIP_LENGTHS);
+    state.selectedShipOrigin = null;
+    state.selectedShipCoordinates = [];
+    state.selectedShipOrientation = null;
+    state.statusMessage = "Your fleet was randomized. Attack when ready.";
+    writeBattleLog("Player fleet randomized.");
+    render();
+  }
+
 }

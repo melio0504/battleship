@@ -21,3 +21,9 @@ const DEFAULT_COMPUTER_PLACEMENTS = [
   { length: 2, start: [9, 8], orientation: "vertical" },
 ];
 
+const soundEffects = {
+  attack: new Audio(boomSoundFile),
+  userWin: new Audio(userWinSoundFile),
+  userLose: new Audio(userLoseSoundFile),
+};
+

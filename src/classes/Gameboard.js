@@ -271,4 +271,11 @@ export class Gameboard {
     return "empty";
   }
 
+  resetBoard() {
+    this.missedAttacks = [];
+    this.successfulAttacks = [];
+    this.ships = [];
+    this.attackedCoordinates = new Set();
+    this.occupiedCoordinates = new Map();
+  }
 }

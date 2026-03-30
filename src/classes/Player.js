@@ -6,4 +6,9 @@ export class Player {
     this.isComputer = isComputer;
     this.gameboard = new Gameboard();
   }
+
+  placeFleetRandomly(shipLengths) {
+    this.gameboard.placeFleetRandomly(shipLengths);
+  }
+
 }

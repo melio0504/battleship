@@ -72,4 +72,24 @@ export function createGameController(domManager) {
     });
   };
 
+  const checkForWinner = () => {
+    if (state.computer.gameboard.allShipsSunk()) {
+      state.gameOver = true;
+      state.statusMessage = "You win. Enemy fleet destroyed.";
+      playSound(soundEffects.userWin);
+      writeBattleLog("Victory: all enemy ships were sunk.");
+      return true;
+    }
+
+    if (state.player.gameboard.allShipsSunk()) {
+      state.gameOver = true;
+      state.statusMessage = "Computer wins. Your fleet has been sunk.";
+      playSound(soundEffects.userLose);
+      writeBattleLog("Defeat: your fleet was sunk.");
+      return true;
+    }
+
+    return false;
+  };
+
 }

@@ -71,4 +71,14 @@ export class Gameboard {
     return coordinates;
   }
 
+  canPlaceCoordinates(coordinates) {
+    return coordinates.every((coordinate) => {
+      if (!this.isWithinBounds(coordinate)) {
+        return false;
+      }
+
+      return !this.occupiedCoordinates.has(Gameboard.coordinateKey(coordinate));
+    });
+  }
+
 }

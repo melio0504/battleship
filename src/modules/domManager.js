@@ -19,15 +19,19 @@ function createCellButton({
   button.dataset.y = String(y);
   button.ariaLabel = `Coordinate ${x}, ${y}`;
 
-  if (status === "hit") {
-    button.textContent = "X";
-  } else if (status === "miss") {
-    button.textContent = "o";
-  } else if (status === "ship" && revealShips) {
-    button.textContent = "■";
-  } else {
-    button.textContent = "";
-  }
+  switch(status) {
+    case "hit":
+      button.textContent = "X";
+      break;
+    case "miss":
+      button.textContent = "O";
+      break;
+    case "ship":
+      button.textContent = "■";
+      break;
+    default:
+      button.textContent = "";
+  } 
 
   button.disabled = !clickable;
   if (clickable) {
